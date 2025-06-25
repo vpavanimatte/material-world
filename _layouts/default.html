@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    <meta property="og:url" content="{{ page.url | replace:'index.html','' | absolute_url }}">
+    <meta property="og:site_name" content="{{ site.title }}">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    
+    <!-- RSS Feed -->
+    <link type="application/atom+xml" rel="alternate" href="{{ '/feed.xml' | relative_url }}" title="{{ site.title }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">
+                <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+            </h1>
+            {% if site.subtitle %}
+                <p class="site-subtitle">{{ site.subtitle }}</p>
+            {% endif %}
+            
+            <nav class="site-nav">
+                <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Inicio</a>
+                <a href="{{ '/ensayos/' | relative_url }}" {% if page.url contains '/ensayos/' %}class="active"{% endif %}>Ensayos</a>
+                <a href="{{ '/analisis/' | relative_url }}" {% if page.url contains '/analisis/' %}class="active"{% endif %}>Análisis</a>
+                <a href="{{ '/datos/' | relative_url }}" {% if page.url contains '/datos/' %}class="active"{% endif %}>Datos</a>
+                <a href="{{ '/sobre-mi/' | relative_url }}" {% if page.url contains '/sobre-mi/' %}class="active"{% endif %}>Sobre Mí</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="main-content">
+                    {{ content }}
+                </div>
+                
+                <aside class="sidebar">
+                    <div class="widget">
+                        <h3>📊 Categorías</h3>
+                        <ul class="category-list">
+                            {% assign categories = site.categories | sort %}
+                            {% for category in categories %}
+                                <li>
+                                    <a href="{{ '/categorias/' | append: category[0] | slugify | relative_url }}">
+                                        {{ category[0] }} ({{ category[1].size }})
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget">
+                        <h3>🏷️ Tags Populares</h3>
+                        <div class="tag-cloud">
+                            {% assign sorted_tags = site.tags | sort: 1 | reverse %}
+                            {% for tag in sorted_tags limit: 10 %}
+                                <a href="{{ '/tags/' | append: tag[0] | slugify | relative_url }}" class="tag">
+                                    {{ tag[0] }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="widget">
+                        <h3>📬 Conectar</h3>
+                        <p>Sígueme para más análisis sobre el mundo material:</p>
+                        <div class="social-links">
+                            {% if site.social.github %}
+                                <a href="https://github.com/{{ site.social.github }}" target="_blank">GitHub</a>
+                            {% endif %}
+                            {% if site.social.twitter %}
+                                <a href="https://twitter.com/{{ site.social.twitter }}" target="_blank">Twitter</a>
+                            {% endif %}
+                            {% if site.social.linkedin %}
+                                <a href="https://linkedin.com/in/{{ site.social.linkedin }}" target="_blank">LinkedIn</a>
+                            {% endif %}
+                            <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. Construido con Jekyll y GitHub Pages.</p>
+            <p>
+                <a href="{{ '/feed.xml' | relative_url }}">RSS</a> | 
+                <a href="https://github.com/{{ site.social.github }}">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Analytics -->
+    {% if site.google_analytics %}
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '{{ site.google_analytics }}');
+        </script>
+    {% endif %}
+</body>
+</html>
