@@ -1,0 +1,59 @@
+# Configuración del sitio
+title: "Material World"
+subtitle: "Análisis, reflexiones y datos sobre nuestro mundo material"
+description: "Explorando patrones globales de consumo, producción y desarrollo humano a través de datos y análisis crítico"
+url: "https://vpavanimatte.github.io"
+baseurl: "/material-world"
+
+# Información del autor
+author:
+  name: "V. Pavani Matte"
+  email: "tu-email@ejemplo.com"  # Cambia por tu email real
+  bio: "Analista de datos enfocado en patrones globales de desarrollo y consumo material"
+
+# Configuración Jekyll
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+paginate: 5
+paginate_path: "/page:num/"
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Configuración de build
+timezone: America/Santiago
+encoding: utf-8
+
+# Colecciones
+collections:
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Tu Nombre"
+      show_date: true
+
+# SEO y Analytics (opcional)
+google_analytics: # Tu código de Google Analytics (después)
+rss: feed.xml
+
+# Configuraciones adicionales
+excerpt_separator: <!--more-->
+show_excerpts: true
+
+# Social links
+social:
+  github: vpavanimatte
+  twitter: vpavanimatte  # Cambia si tienes diferente username
+  linkedin: vpavanimatte  # Cambia si tienes diferente username
